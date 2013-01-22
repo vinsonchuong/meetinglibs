@@ -17,7 +17,7 @@ development:
   encoding: unicode
   database: meetinglibs_development
   pool: 5
-  username: meetinglibs
+  username: <%= Etc.getpwuid(Process.uid).name %>
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -43,7 +43,7 @@ test:
   encoding: unicode
   database: meetinglibs_test
   pool: 5
-  username: meetinglibs
+  username: <%= Etc.getpwuid(Process.uid).name %>
   password:
 
 production:
