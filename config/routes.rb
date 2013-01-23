@@ -1,4 +1,4 @@
-Meetinglibs::Application.routes.draw do
+MeetingLibs::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

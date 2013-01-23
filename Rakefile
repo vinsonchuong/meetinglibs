@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Meetinglibs::Application.load_tasks
+MeetingLibs::Application.load_tasks
