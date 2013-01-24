@@ -2,8 +2,9 @@
 require File.expand_path('../application', __FILE__)
 
 # Source credentials and encryption keys
-secrets = Rails.root.join('secrets.rb')
-load(secrets) if File.exists?(secrets)
+Rails.root.join('secrets.rb').tap do |secrets|
+  load(secrets) if File.exists?(secrets)
+end
 
 # Initialize the rails application
 MeetingLibs::Application.initialize!
