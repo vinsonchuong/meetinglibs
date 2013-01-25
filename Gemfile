@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 3.2.11'
+gem 'thin'
 gem 'pg'
 gem 'jquery-rails'
 
@@ -9,17 +10,18 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+group :development, :test do
+  gem 'debugger'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+  gem 'rspec-rails', '>= 2.0.0'
+  gem 'capybara'
+  gem 'jasmine'
+  gem 'jasminerice'
 
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
+  gem 'rb-inotify', '~> 0.8.8', :require => false
+  gem 'rb-fsevent', :require => false
+  gem 'rb-fchange', :require => false
+  gem 'guard-spork', git: 'git://github.com/vinsonchuong/guard-spork.git', branch: 'fix-initialization-exception'
+  gem 'guard-rspec'
+  gem 'guard-jasmine'
+end
