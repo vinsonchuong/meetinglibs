@@ -4,6 +4,7 @@ gem 'rails', '~> 3.2.11'
 gem 'thin'
 gem 'pg'
 gem 'jquery-rails'
+gem 'backbone-rails'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
