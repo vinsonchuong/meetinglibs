@@ -169,6 +169,11 @@ GEM
       rspec-core (~> 2.12.0)
       rspec-expectations (~> 2.12.0)
       rspec-mocks (~> 2.12.0)
+    rubycas-client (2.2.1)
+      activesupport
+    rubycas-client-rails (0.1.0)
+      rails (>= 3.0.0)
+      rubycas-client (>= 2.2.0)
     rubyzip (0.9.9)
     sass (3.2.5)
     sass-rails (3.2.6)
@@ -225,6 +230,7 @@ DEPENDENCIES
   rb-fsevent
   rb-inotify (~> 0.8.8)
   rspec-rails (>= 2.0.0)
+  rubycas-client-rails
   sass-rails (~> 3.2.3)
   thin
   uglifier (>= 1.0.3)

@@ -3,8 +3,11 @@ source 'https://rubygems.org'
 gem 'rails', '~> 3.2.11'
 gem 'thin'
 gem 'pg'
+
 gem 'jquery-rails'
 gem 'backbone-rails'
+
+gem 'rubycas-client-rails'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
