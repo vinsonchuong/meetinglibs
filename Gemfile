@@ -27,7 +27,7 @@ group :development, :test do
   gem 'rb-inotify', '~> 0.8.8', :require => false
   gem 'rb-fsevent', :require => false
   gem 'rb-fchange', :require => false
-  gem 'guard-spork', git: 'git://github.com/vinsonchuong/guard-spork.git', branch: 'fix-initialization-exception'
+  gem 'guard-spork', git: 'git://github.com/guard/guard-spork.git'
   gem 'guard-rspec'
   gem 'guard-jasmine'
 end

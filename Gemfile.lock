@@ -1,7 +1,6 @@
 GIT
-  remote: git://github.com/vinsonchuong/guard-spork.git
-  revision: 1c6b5ca483ec59cb46e709094245b242735cbb9c
-  branch: fix-initialization-exception
+  remote: git://github.com/guard/guard-spork.git
+  revision: e7051fe33446a07a2c57a22d7aa8dab68aedd713
   specs:
     guard-spork (1.4.1)
       childprocess (>= 0.2.3)
