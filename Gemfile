@@ -7,7 +7,7 @@ gem 'pg'
 gem 'jquery-rails'
 gem 'backbone-rails'
 
-gem 'rubycas-client-rails'
+gem 'rubycas-client-rails', git: 'git://github.com/rubycas/rubycas-client-rails'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'

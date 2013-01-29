@@ -7,6 +7,14 @@ GIT
       guard (>= 1.1)
       spork (>= 0.8.4)
 
+GIT
+  remote: git://github.com/rubycas/rubycas-client-rails
+  revision: b97de6edc7871bc43ca1c9572f4d9188a210b341
+  specs:
+    rubycas-client-rails (0.1.1)
+      rails (>= 3.0.0)
+      rubycas-client (~> 2.3.9.rc1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -168,11 +176,8 @@ GEM
       rspec-core (~> 2.12.0)
       rspec-expectations (~> 2.12.0)
       rspec-mocks (~> 2.12.0)
-    rubycas-client (2.2.1)
+    rubycas-client (2.3.9)
       activesupport
-    rubycas-client-rails (0.1.0)
-      rails (>= 3.0.0)
-      rubycas-client (>= 2.2.0)
     rubyzip (0.9.9)
     sass (3.2.5)
     sass-rails (3.2.6)
@@ -229,7 +234,7 @@ DEPENDENCIES
   rb-fsevent
   rb-inotify (~> 0.8.8)
   rspec-rails (>= 2.0.0)
-  rubycas-client-rails
+  rubycas-client-rails!
   sass-rails (~> 3.2.3)
   thin
   uglifier (>= 1.0.3)
