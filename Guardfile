@@ -1,3 +1,5 @@
+notification :tmux, display_message: true, color_location: ''
+
 guard 'spork' do
   watch('config/application.rb')
   watch('config/environment.rb')
