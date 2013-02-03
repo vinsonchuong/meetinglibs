@@ -6,7 +6,19 @@
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
-    <%= yield %>
+  <body <%== %(class="#{yield :class_name}") if content_for? :class_name %>>
+    <h1>MeetingLibs</h1>
+    <ul class="messages">
+      <% if flash[:error].present? %>
+        <li class="error"><%= flash[:error] %>
+      <% end %>
+      <% if flash[:alert].present? %>
+        <li class="alert"><%= flash[:alert] %>
+      <% end %>
+      <% if flash[:notice].present? %>
+        <li class="notice"><%= flash[:notice] %>
+      <% end %>
+    </ul>
+    <%= yield :content %>
   </body>
 </html>

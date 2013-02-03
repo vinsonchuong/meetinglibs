@@ -62,4 +62,7 @@ MeetingLibs::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  # CalNet Authentication
+  config.rubycas.cas_base_url = 'https://auth.berkeley.edu/cas'
 end

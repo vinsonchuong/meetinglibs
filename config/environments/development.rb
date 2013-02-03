@@ -32,4 +32,7 @@ MeetingLibs::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # CalNet Authentication
+  config.rubycas.cas_base_url = 'https://auth-test.berkeley.edu/cas'
 end

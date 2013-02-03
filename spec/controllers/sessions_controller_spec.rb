@@ -12,7 +12,7 @@ describe SessionsController do
     context 'when not authenticated' do
       it 'redirects to CalNet Authentication' do
         get :calnet
-        expect(response).to redirect_to('https://auth.berkeley.edu/cas/login?service=' + CGI.escape('http://test.host/session/calnet'))
+        expect(response).to redirect_to('https://auth-test.berkeley.edu/cas/login?service=' + CGI.escape('http://test.host/session/calnet'))
       end
     end
 
@@ -115,7 +115,7 @@ describe SessionsController do
 
         it 'should redirect to CalNet logout' do
           delete :destroy
-          expect(response).to redirect_to('https://auth.berkeley.edu/cas/logout?service')
+          expect(response).to redirect_to('https://auth-test.berkeley.edu/cas/logout?service')
         end
       end
     end

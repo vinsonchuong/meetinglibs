@@ -37,8 +37,5 @@ module MeetingLibs
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-
-    # CalNet Authentication
-    config.rubycas.cas_base_url = 'https://auth.berkeley.edu/cas'
   end
 end

@@ -21,7 +21,9 @@ group :development, :test do
   gem 'binding_of_caller'
 
   gem 'rspec-rails', '>= 2.0.0'
+  gem 'database_cleaner'
   gem 'capybara'
+  gem 'terminus'
   gem 'jasmine'
   gem 'jasminerice'
 

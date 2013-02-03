@@ -1,0 +1,19 @@
+<% content_for :class_name, 'sign_in_page' %>
+
+<% content_for :content do %>
+  <h2>Sign In</h2>
+  <p>Please sign in</p>
+  <ul class="methods">
+    <li class="method">
+      through <%= link_to 'CalNet Authentication', calnet_session_path  %> or
+    </li>
+    <li class="method">
+      <%= form_tag session_path do %>
+        by providing an
+        <%= label_tag :token, 'invitation token:' %>
+        <%= text_field_tag :token %>
+        <%= submit_tag 'Sign In' %>
+      <% end %>
+    </li>
+  </ul>
+<% end %>

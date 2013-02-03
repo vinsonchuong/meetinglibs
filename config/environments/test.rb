@@ -32,4 +32,7 @@ MeetingLibs::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # CalNet Authentication
+  config.rubycas.cas_base_url = 'https://auth-test.berkeley.edu/cas'
 end
