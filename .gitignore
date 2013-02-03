@@ -1,6 +1,6 @@
 /.bundle
 /db/*.sqlite3
+/.env
 /.gem
 /log/*.log
-/secrets.rb
 /tmp
