@@ -33,6 +33,7 @@ group :test, :development do
   gem 'rake'
 
   gem 'rspec-rails', '>= 2.0.0'
+  gem 'spork'
   gem 'database_cleaner'
   gem 'capybara'
   gem 'terminus'

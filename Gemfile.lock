@@ -318,6 +318,7 @@ DEPENDENCIES
   rspec-rails (>= 2.0.0)
   rubycas-client-rails!
   sass-rails (~> 3.2.3)
+  spork
   terminus
   thin
   travis
