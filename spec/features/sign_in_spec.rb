@@ -1,15 +1,23 @@
 require 'spec_helper'
 
 feature 'signing in through CalNet Authentication' do
+  given(:cas_user) { ENV['CAS_USER'] }
+  given(:calnet_id) { ENV['CALNET_ID'] }
+  given(:calnet_passphrase) { ENV['CALNET_PASSPHRASE'] }
+
   background do
-    User.create!(cas_user: ENV['CAS_USER'])
+    unless [cas_user, calnet_id, calnet_passphrase].all?(&:present?)
+      pending 'CalNet credentials not specified'
+    end
+
+    User.create!(cas_user: cas_user)
   end
 
   scenario 'providing valid credentials' do
     visit '/'
     click_link 'CalNet Authentication'
-    fill_in 'CalNet ID', with: ENV['CALNET_ID']
-    fill_in 'Passphrase', with: ENV['CALNET_PASSPHRASE']
+    fill_in 'CalNet ID', with: calnet_id
+    fill_in 'Passphrase', with: calnet_passphrase
     click_button 'Sign In'
     expect(current_path).to eq('/')
     expect(page).to have_content('MeetingLibs')

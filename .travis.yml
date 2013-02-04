@@ -1,0 +1,19 @@
+language: ruby
+bundler_args: --without development
+rvm:
+  - 1.9.3
+env:
+  - POSTGRES_USER=postgres
+
+branches:
+  only:
+    - master
+    - /^feature-.*$/
+
+before_script:
+  - psql -U $POSTGRES_USER -c 'create database meetinglibs_test;'
+
+script:
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec
+  - bundle exec guard-jasmine

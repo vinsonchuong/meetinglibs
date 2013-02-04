@@ -15,17 +15,12 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :development, :test do
+group :development do
+  gem 'travis'
+
   gem 'debugger'
   gem 'better_errors'
   gem 'binding_of_caller'
-
-  gem 'rspec-rails', '>= 2.0.0'
-  gem 'database_cleaner'
-  gem 'capybara'
-  gem 'terminus'
-  gem 'jasmine'
-  gem 'jasminerice'
 
   gem 'rb-inotify', '~> 0.8.8', :require => false
   gem 'rb-fsevent', :require => false
@@ -33,4 +28,15 @@ group :development, :test do
   gem 'guard-spork', git: 'git://github.com/guard/guard-spork.git'
   gem 'guard-rspec'
   gem 'guard-jasmine'
+end
+
+group :test, :development do
+  gem 'rake'
+
+  gem 'rspec-rails', '>= 2.0.0'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'terminus'
+  gem 'jasmine'
+  gem 'jasminerice'
 end
