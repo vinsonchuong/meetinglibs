@@ -27,7 +27,6 @@ group :development do
   gem 'rb-fchange', :require => false
   gem 'guard-spork', git: 'git://github.com/guard/guard-spork.git'
   gem 'guard-rspec'
-  gem 'guard-jasmine'
 end
 
 group :test, :development do
@@ -38,5 +37,6 @@ group :test, :development do
   gem 'capybara'
   gem 'terminus'
   gem 'jasmine'
+  gem 'guard-jasmine'
   gem 'jasminerice'
 end
