@@ -1,0 +1,18 @@
+staging:
+  app: meetinglibs
+  stack: cedar
+  config:
+    BUNDLE_WITHOUT: "development:test"
+  addons:
+    - heroku-postgresql:dev
+    - pgbackups:auto-month
+
+# production:
+#   app: awesomeapp
+#   stack: cedar
+#   tag: production/*
+#   config:
+#     BUNDLE_WITHOUT: "development:test"
+#   addons:
+#     - heroku-postgresql:basic
+#     - pgbackups:auto-month

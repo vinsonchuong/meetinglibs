@@ -18,6 +18,7 @@ group :assets do
 end
 
 group :development do
+  gem 'heroku_san'
   gem 'travis'
 
   gem 'debugger'
