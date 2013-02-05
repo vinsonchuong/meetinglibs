@@ -1,8 +1,11 @@
+---
 language: ruby
 bundler_args: --without development
 rvm:
   - 1.9.3
+
 env:
+  - secret: 'GtXGVAIHLAuH4CAq+fb/zSBuF7oO96stPfU0R81WEW47kwZ6A7G4xJPREU+O\nPsik1tEjUUY2T+m6rrEe7QOfMuoMMjIFnemSYlKzH/fBmvahvpkvNOgvtFuS\nLgyCLXcwnnSGzJvGmKBZSZ0zHP8FElpAiIo14eH/unOBoO4tlgo='
   - POSTGRES_USER=postgres
 
 branches:
