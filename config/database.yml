@@ -13,11 +13,3 @@ test:
   pool: 5
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
-
-production:
-  adapter: postgresql
-  encoding: unicode
-  database: meetinglibs
-  pool: 5
-  username: <%= ENV['POSTGRES_USER'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
