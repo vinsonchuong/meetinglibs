@@ -1,13 +1,4 @@
 GIT
-  remote: git://github.com/guard/guard-spork.git
-  revision: 2200667b5ee4090acc5d19c4ea5fc736411a2c81
-  specs:
-    guard-spork (1.4.2)
-      childprocess (>= 0.2.3)
-      guard (>= 1.1)
-      spork (>= 0.8.4)
-
-GIT
   remote: git://github.com/rubycas/rubycas-client-rails
   revision: b97de6edc7871bc43ca1c9572f4d9188a210b341
   specs:
@@ -133,6 +124,10 @@ GEM
     guard-rspec (2.4.0)
       guard (>= 1.1)
       rspec (~> 2.11)
+    guard-spork (1.4.2)
+      childprocess (>= 0.2.3)
+      guard (>= 1.1)
+      spork (>= 0.8.4)
     haml (3.1.7)
     highline (1.6.15)
     hike (1.2.1)
@@ -306,7 +301,7 @@ DEPENDENCIES
   guard
   guard-jasmine
   guard-rspec
-  guard-spork!
+  guard-spork (>= 1.4.2)
   jasmine
   jasminerice
   jquery-rails
