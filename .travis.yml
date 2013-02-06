@@ -14,9 +14,6 @@ branches:
     - master
     - /^feature-.*$/
 
-before_script:
-  - psql -U $POSTGRES_USER -c 'create database meetinglibs_test;'
-
 script:
   - bundle exec rake db:setup db:test:prepare
   - bundle exec rspec
