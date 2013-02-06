@@ -15,6 +15,6 @@ branches:
     - /^feature-.*$/
 
 script:
-  - bundle exec rake db:setup db:test:prepare
+  - bundle exec rake db:setup
   - bundle exec rspec
   - bundle exec guard-jasmine
