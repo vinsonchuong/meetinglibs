@@ -6,7 +6,7 @@ rvm:
 
 env:
   global:
-    - secure: "aZ0L5QyCYQUTA75lN0nRbSk9yuac9Ul+83h2nMHMQeCkkEyZjr+JpgYsQ2J3\nRgRfM+CdlKfSbiUurd7lZ6S+U7QCsSCiJF73FEPUHumzQL+XtT6nNKHNObK/\newjM/tBoZCgm/POdMaKXN+XPVAdXYcJORdpqlvd27NhWOHACndU="
+    - secure: "ssfpq4XY3RUl6j8eUnDrq2GB+LwGl2Vdly2ffbBkggdUtVP1rHsv2/NXuLiN\nXAFStwVYxIJEyCVSh2sGqTsSgIoe5ogtIaYOAzi9zY2G+ddoUo11R3n4PzkX\nR3+SQyqO6n6w95KqaxLQnUVTxxptO5Yk+0HpC3KeZN4R/fbC+x4="
     - POSTGRES_USER=postgres
 
 branches:
