@@ -3,6 +3,47 @@
 [![Dependency Status](https://gemnasium.com/vinsonchuong/meetinglibs.png)](https://gemnasium.com/vinsonchuong/meetinglibs)
 [![Code Climate](https://codeclimate.com/github/vinsonchuong/meetinglibs.png)](https://codeclimate.com/github/vinsonchuong/meetinglibs)
 
+## Development
+### Getting Started
+We assume that the following external dependencies are setup and available:
+* PostgreSQL
+* Ruby 1.9.3
+* Bundler
+* [Heroku Toolbelt](http://toolbelt.heroku.com)
+
+The rest of the dependencies are handled through:
+```bash
+bundle install
+```
+
+Create `.env` with the necessary database credentials:
+```bash
+POSTGRES_USER='if different from your unix username'
+POSTGRES_PASSWORD='unless Postgres authenticates with trust or ident'
+```
+Then, bootstrap the database with:
+```bash
+foreman run bundle exec rake db:setup
+foreman run bundle exec rake db:test:prepare
+```
+
+Create a cookie encryption key with:
+```bash
+echo "SECRET_TOKEN='$(bundle exec rake secret)'" >> .env
+```
+
+Some of the integration tests require CalNet Authentication credentials to be supplied. To run those tests, add to `.env`:
+```bash
+CAS_USER='the UID from the CalNet Directory'
+CALNET_ID='...'
+CALNET_PASSPHRASE='...'
+```
+
+You should now be able to run the tests and start the application:
+```bash
+foreman start
+```
+
 ## License
 ```
 Copyright (c) 2013 Vinson Chuong
