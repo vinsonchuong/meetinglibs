@@ -5,15 +5,16 @@ class SessionsController < ApplicationController
   end
 
   def calnet
-    session[:user_id] = User.where(cas_user: session[:cas_user]).first.id
-    redirect_to action: :show
+    authenticator = UserAuthenticator.new(session)
+    if authenticator.authenticate!(cas_user: session[:cas_user])
+      redirect_to action: :show
+    end
   end
 
   def create
     @token = params[:token]
-    user = User.where(token: @token).first
-    if user.present?
-      session[:user_id] = user.id
+    authenticator = UserAuthenticator.new(session)
+    if authenticator.authenticate!(token: @token)
       redirect_to action: :show
     else
       flash.now[:error] = 'invalid token'
@@ -22,7 +23,7 @@ class SessionsController < ApplicationController
   end
 
   def show
-    redirect_to action: :new if session[:user_id].blank?
+    redirect_to action: :new unless UserAuthenticator.new(session).authenticated?
   end
 
   def destroy

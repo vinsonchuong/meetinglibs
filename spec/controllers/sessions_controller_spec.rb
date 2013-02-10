@@ -9,66 +9,82 @@ describe SessionsController do
   end
 
   describe '#calnet' do
-    context 'when not authenticated' do
+    context 'when not yet authenticated via CalNet Authentication' do
       it 'redirects to CalNet Authentication' do
         get :calnet
         expect(response).to redirect_to('https://auth-test.berkeley.edu/cas/login?service=' + CGI.escape('http://test.host/session/calnet'))
       end
     end
 
-    context 'when authenticated' do
+    context 'when authenticated via CalNet Authentication' do
       before do
-        @user = User.create(cas_user: 'cas_user_id')
-        RubyCAS::Filter.fake('cas_user_id')
+        @user = User.create(cas_user: 'cas_user')
+        RubyCAS::Filter.fake('cas_user')
       end
 
-      it 'should store the CAS user id in the session' do
-        get :calnet
-        expect(session[:cas_user]).to eq('cas_user_id')
+      context 'when successfully authenticated locally' do
+        before do
+          UserAuthenticator.any_instance
+          .stub(:authenticated!)
+          .with(cas_user: 'cas_user')
+          .and_return(true)
+        end
+
+        it 'should redirect to #show' do
+          get :calnet
+          expect(response).to redirect_to(action: :show)
+        end
       end
 
-      it 'should store the associated user id in the session' do
-        get :calnet
-        expect(session[:user_id]).to eq(@user.id)
-      end
+      context 'when not successfully authenticated locally' do
+        before do
+          UserAuthenticator.any_instance
+          .stub(:authenticated!)
+          .with(cas_user: 'cas_user')
+          .and_return(false)
+        end
 
-      it 'should redirect to #show' do
-        get :calnet
-        expect(response).to redirect_to(action: :show)
+        it 'should redirect to #new'
+        it 'should display an error message'
       end
     end
   end
 
   describe '#create' do
-    context 'when a user with the given token exists' do
+    context 'when successfully authenticated' do
       before do
-        @user = User.create(token: 'login_token')
-      end
-
-      it 'should store the associated user id in the session' do
-        post :create, token: 'login_token'
-        expect(session[:user_id]).to eq(@user.id)
+        UserAuthenticator.any_instance
+          .stub(:authenticate!)
+          .with(token: 'token')
+          .and_return(true)
       end
 
       it 'should redirect to #show' do
-        post :create, token: 'login_token'
+        post :create, token: 'token'
         expect(response).to redirect_to(action: :show)
       end
     end
 
-    context 'when no user with the given token exists' do
+    context 'when not successfully authenticated' do
+      before do
+        UserAuthenticator.any_instance
+          .stub(:authenticate!)
+          .with(token: 'token')
+          .and_return(false)
+      end
+
       it 'should assign the token to @token' do
-        post :create, token: 'login_token'
-        expect(assigns[:token]).to eq('login_token')
+        post :create, token: 'token'
+        expect(assigns[:token]).to eq('token')
       end
 
       it 'should flash an error message' do
-        post :create, token: 'login_token'
+        post :create, token: 'token'
         expect(flash[:error]).to eq('invalid token')
       end
 
       it 'should render the "new" template' do
-        post :create, token: 'login_token'
+        post :create, token: 'token'
         expect(response).to render_template('new')
       end
     end
@@ -77,8 +93,7 @@ describe SessionsController do
   describe '#show' do
     context 'when authenticated' do
       before do
-        @user = User.create
-        session[:user_id] = @user.id
+        UserAuthenticator.any_instance.stub(:authenticated?).and_return(true)
       end
 
       it 'should render the "show" template' do
@@ -88,6 +103,10 @@ describe SessionsController do
     end
 
     context 'when not authenticated' do
+      before do
+        UserAuthenticator.any_instance.stub(:authenticated?).and_return(false)
+      end
+
       it 'should redirect to #new' do
         get :show
         expect(response).to redirect_to(action: :new)
