@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Session' do
+describe 'Session Routes' do
   describe 'get /session/new' do
     it 'should route to SessionsController#new' do
       expect(get: '/session/new').to route_to controller: 'sessions', action: 'new'

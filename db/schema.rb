@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130128014213) do
+ActiveRecord::Schema.define(:version => 20130210205751) do
+
+  create_table "events", :force => true do |t|
+    t.text     "name"
+    t.boolean  "archived"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "events", ["archived"], :name => "index_events_on_archived"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -26,8 +35,9 @@ ActiveRecord::Schema.define(:version => 20130128014213) do
   create_table "users", :force => true do |t|
     t.text     "cas_user"
     t.text     "token"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.boolean  "administrator"
   end
 
   add_index "users", ["cas_user"], :name => "index_users_on_cas_user"

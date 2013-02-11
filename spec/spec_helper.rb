@@ -4,12 +4,13 @@ require 'spork'
 #require 'spork/ext/ruby-debug'
 
 Spork.prefork do
-  ENV["RAILS_ENV"] ||= 'test'
+  ENV['RAILS_ENV'] ||= 'test'
 
-  require File.expand_path("../../config/environment", __FILE__)
+  require File.expand_path('../../config/environment', __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
-  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+  Dir[Rails.root.join('spec/support/**/*.rb')].each {|f| require f}
+  Dir[Rails.root.join('spec/helpers/*.rb')].each {|f| require f}
 
   Capybara.default_driver = :terminus
 
@@ -18,10 +19,12 @@ Spork.prefork do
     # order dependency and want to debug it, you can fix the order by providing
     # the seed, which is printed after each run.
     #     --seed 1234
-    config.order = "random"
+    config.order = 'random'
 
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
     config.use_transactional_fixtures = false
+
+    config.include FeatureHelpers, type: :feature
 
     config.before do
       DatabaseCleaner.strategy = :transaction
