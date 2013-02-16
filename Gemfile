@@ -13,6 +13,7 @@ gem 'backbone-rails'
 gem 'rubycas-client-rails', git: 'git://github.com/rubycas/rubycas-client-rails'
 
 group :assets do
+  gem 'ejs'
   gem 'sass-rails', '~> 3.2.3'
   gem 'uglifier', '>= 1.0.3'
 end
@@ -44,4 +45,6 @@ group :test, :development do
   gem 'jasmine'
   gem 'guard-jasmine'
   gem 'jasminerice'
+  gem 'sinon-rails'
+  gem 'jasmine-jquery-rails'
 end

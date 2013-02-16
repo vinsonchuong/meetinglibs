@@ -3,4 +3,6 @@ MeetingLibs::Application.routes.draw do
   resource :session, except: [:edit, :update] do
     get :calnet
   end
+
+  resources :events, only: [:index]
 end

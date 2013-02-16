@@ -4,6 +4,8 @@ describe UserAuthenticator do
   subject { UserAuthenticator.new(session) }
   let(:session) { {} }
 
+  it { should_not be_authenticated }
+
   describe '#authenticate!' do
     context 'when provided a valid cas_user' do
       let!(:user) { User.create(cas_user: 'cas_user') }
@@ -25,6 +27,13 @@ describe UserAuthenticator do
 
       it { should be_authenticated }
       its(:user) { should eq(user) }
+    end
+
+    context 'when provided administrator credentials' do
+      let!(:user) { User.create(cas_user: 'cas_user', administrator: true) }
+      before { subject.authenticate!(cas_user: 'cas_user') }
+
+      it { should be_administrator }
     end
 
     context 'when provided invalid credentials' do

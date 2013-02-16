@@ -10,6 +10,10 @@ class UserAuthenticator
     @user.present?
   end
 
+  def administrator?
+    @user.administrator?
+  end
+
   def authenticate!(credentials)
     if credentials.has_key?(:cas_user)
       @user = User.where(cas_user: credentials[:cas_user]).first

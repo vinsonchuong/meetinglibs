@@ -8,14 +8,15 @@ feature 'viewing a listing of events' do
   end
 
   scenario 'as an administrator' do
-    pending
     sign_in with: {administrator: true}, via: :calnet
-    expect(page.all('.event .name').map(&:text)).to eq(['Event 1', 'Event 2', 'Event 3'])
+    expect(page.find('.event:nth-child(1) .name')).to have_text('Event 1')
+    expect(page.find('.event:nth-child(2) .name')).to have_text('Event 2')
+    expect(page.find('.event:nth-child(3) .name')).to have_text('Event 3')
   end
 
   scenario 'as a normal user' do
-    pending
     sign_in with: {administrator: false}, via: :calnet
-    expect(page.all('.event .name').map(&:text)).to eq(['Event 2', 'Event 3'])
+    expect(page.find('.event:nth-child(1) .name')).to have_text('Event 2')
+    expect(page.find('.event:nth-child(2) .name')).to have_text('Event 3')
   end
 end
