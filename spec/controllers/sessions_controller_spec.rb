@@ -94,6 +94,12 @@ describe SessionsController do
     context 'when authenticated' do
       before do
         UserAuthenticator.any_instance.stub(:authenticated?).and_return(true)
+        UserAuthenticator.any_instance.stub(:administrator?).and_return(true)
+      end
+
+      it 'should assign the role of the user' do
+        get :show
+        expect(assigns(:administrator)).to be_true
       end
 
       it 'should render the "show" template' do

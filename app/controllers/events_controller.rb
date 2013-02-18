@@ -1,10 +1,16 @@
 class EventsController < ApplicationController
+  before_filter :require_authentication
+  before_filter :require_administrator, only: :update
+
+  respond_to :json
+
   def index
-    user_authenticator = UserAuthenticator.new(session)
-    if user_authenticator.authenticated?
-      render json: EventsPresenter.new(Event.all, user_authenticator)
-    else
-      head '401'
+    respond_with EventsPresenter.new(Event.all, user_authenticator)
+  end
+
+  def update
+    validate_input_with(EventInput) do |attributes|
+      respond_with Event.find(params[:id]).update_attributes(attributes)
     end
   end
 end

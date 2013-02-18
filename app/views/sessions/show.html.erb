@@ -1,6 +1,11 @@
 <% content_for :content do %>
-  <div class="page_content" />
+  <div class="page_content"></div>
+  <div class="dialog_content"></div>
   <script type="text/javascript">
-    $(MeetingLibs.initialize);
+    $(function() {
+      session = new MeetingLibs({
+        administrator: <%= @administrator %>
+      });
+    });
   </script>
 <% end %>

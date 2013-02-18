@@ -4,5 +4,7 @@ MeetingLibs::Application.routes.draw do
     get :calnet
   end
 
-  resources :events, only: [:index]
+  defaults format: :json do
+    resources :events, only: [:index, :update]
+  end
 end

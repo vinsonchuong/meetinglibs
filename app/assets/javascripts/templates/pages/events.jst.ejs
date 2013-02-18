@@ -1,7 +1,18 @@
-<ul class="events_list">
+<ul class="event_list">
   <% _.each(events, function(event) { %>
-    <li class="event">
-      <span class="name"><%= event.name %></span>
-    </li>
+    <% if (event.archived) { %>
+      <li class="event archived" data-id="<%= event.id %>">
+        <span class="name"><%= event.name %></span>
+      </li>
+    <% } else { %>
+      <li class="event" data-id="<%= event.id %>">
+        <span class="name"><%= event.name %></span>
+        <ul class="actions">
+          <% if (session.administrator) { %>
+            <li><a href="#" class="archive">Archive</a></li>
+          <% } %>
+        </ul>
+      </li>
+    <% } %>
   <% }) %>
 </ul>

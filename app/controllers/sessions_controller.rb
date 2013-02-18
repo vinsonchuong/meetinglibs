@@ -23,7 +23,12 @@ class SessionsController < ApplicationController
   end
 
   def show
-    redirect_to action: :new unless UserAuthenticator.new(session).authenticated?
+    user_authenticator = UserAuthenticator.new(session)
+    if user_authenticator.authenticated?
+      @administrator = user_authenticator.administrator?
+    else
+      redirect_to action: :new
+    end
   end
 
   def destroy
