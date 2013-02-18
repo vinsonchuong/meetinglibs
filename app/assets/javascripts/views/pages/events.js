@@ -7,14 +7,15 @@ MeetingLibs.View.Page.Events = MeetingLibs.View.Page.extend({
   templateName: 'pages/events',
 
   events: {
-    'click .actions .archive': 'archiveEvent'
+    'click .actions .archive': 'archiveEvent',
+    'click .actions .delete': 'deleteEvent'
   },
 
   initialize: function() {
     this.setElement(Backbone.$('.page_content'));
 
     this.model = new MeetingLibs.Collection.Event();
-    this.listenTo(this.model, 'reset change', this.render);
+    this.listenTo(this.model, 'reset change destroy', this.render);
     this.model.fetch();
   },
 
@@ -49,6 +50,23 @@ MeetingLibs.View.Page.Events = MeetingLibs.View.Page.extend({
     this.listenTo(dialog, 'confirm', function() {
       this.stopListening(dialog, 'confirm');
       event.save({archived: true}, {wait: true});
+    });
+  },
+
+  deleteEvent: function(e) {
+    e.preventDefault();
+    var eventId = this.$(e.currentTarget).parents('.event').data('id');
+    var event = this.model.get(eventId);
+
+    var dialog = new MeetingLibs.View.Dialog.Confirmation({
+      message: 'You are deleting ' + event.get('name') + '. Survey answers,' +
+               ' meeting schedules, and comments for this event will all be' +
+               ' permanently deleted. Do you want to continue?',
+      action: 'Delete Event'
+    });
+    this.listenTo(dialog, 'confirm', function() {
+      this.stopListening(dialog, 'confirm');
+      event.destroy({wait: true});
     });
   },
 

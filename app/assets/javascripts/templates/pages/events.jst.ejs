@@ -3,6 +3,11 @@
     <% if (event.archived) { %>
       <li class="event archived" data-id="<%= event.id %>">
         <span class="name"><%= event.name %></span>
+        <ul class="actions">
+          <% if (session.administrator) { %>
+            <li><a href="#" class="delete">Delete</a></li>
+          <% } %>
+        </ul>
       </li>
     <% } else { %>
       <li class="event" data-id="<%= event.id %>">
@@ -10,6 +15,7 @@
         <ul class="actions">
           <% if (session.administrator) { %>
             <li><a href="#" class="archive">Archive</a></li>
+            <li><a href="#" class="delete">Delete</a></li>
           <% } %>
         </ul>
       </li>

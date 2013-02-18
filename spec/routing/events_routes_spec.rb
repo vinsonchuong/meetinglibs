@@ -12,4 +12,10 @@ describe 'Events Routes' do
       expect(put: '/events/1').to route_to(controller: 'events', action: 'update', id: '1', format: :json)
     end
   end
+
+  describe 'delete /events/1' do
+    it 'should route to EventsController#destroy' do
+      expect(delete: '/events/1').to route_to(controller: 'events', action: 'destroy', id: '1', format: :json)
+    end
+  end
 end

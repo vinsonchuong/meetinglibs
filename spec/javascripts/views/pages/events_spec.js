@@ -66,8 +66,12 @@ describe('MeetingLibs.View.Page.Events', function() {
         subject.render();
       });
 
-      it('should not allow archiving an event', function() {
+      it('should not allow archiving events', function() {
         expect(subject.$('.event_list .event .archive')).not.toExist();
+      });
+
+      it('should not allow deleting events', function() {
+        expect(subject.$('.event_list .event .delete')).not.toExist();
       });
     });
 
@@ -111,6 +115,50 @@ describe('MeetingLibs.View.Page.Events', function() {
 
         it('should not archive the event', function() {
           expect(subject.$('.event_list .event:eq(1)')).not.toHaveClass('archived');
+        });
+      });
+    });
+
+    describe('when deleting an event', function() {
+      beforeEach(function() {
+        subject.$('.event_list .event:eq(0) .delete').click();
+      });
+
+      it('should show a confirmation dialog', function() {
+        expect($('.confirmation .message')).toHaveText(
+          'You are deleting Event 1. Survey answers, meeting schedules, and' +
+          ' comments for this event will all be permanently deleted. Do you' +
+          ' want to continue?'
+        )
+      });
+
+      describe('when confirming', function() {
+        beforeEach(function() {
+          $('.confirmation :contains("Delete Event")').click();
+        });
+
+        it('should delete the event from the server', function() {
+          expect({method: 'DELETE', url: '/events/1'}).toHaveBeenRequested();
+        });
+
+        describe('when the server responds', function() {
+          beforeEach(function() {
+            server.respondTo('DELETE', '/events/1');
+          });
+
+          it('should remove the event', function() {
+            expect(subject.$('.event_list .event .name:contains("Event 1")')).not.toExist();
+          });
+        });
+      });
+
+      describe('when cancelling', function() {
+        beforeEach(function() {
+          $('.confirmation :contains("Cancel")').click();
+        });
+
+        it('should not delete the event', function() {
+          expect(subject.$('.event_list .event .name:contains("Event 1")')).toExist();
         });
       });
     });

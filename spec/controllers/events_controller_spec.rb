@@ -81,4 +81,27 @@ describe EventsController do
       end
     end
   end
+
+  describe '#destroy' do
+    def call_action
+      delete :destroy, id: event.id, format: :json
+    end
+
+    let!(:event) { Event.create!(name: 'Event', archived: true) }
+
+    it_should_behave_like 'an authenticated action'
+    it_should_behave_like 'an administrator action'
+
+    context 'when authenticated as an administrator' do
+      before do
+        UserAuthenticator.any_instance.stub(:authenticated?).and_return(true)
+        UserAuthenticator.any_instance.stub(:administrator?).and_return(true)
+      end
+
+      it 'should destroy the event' do
+        call_action
+        expect(Event.where(name: 'Event 1')).to be_empty
+      end
+    end
+  end
 end
