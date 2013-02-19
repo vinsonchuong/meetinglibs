@@ -12,6 +12,7 @@ Spork.prefork do
   Dir[Rails.root.join('spec/support/**/*.rb')].each {|f| require f}
 
   Capybara.default_driver = :terminus
+  Capybara.default_wait_time = ENV['CAPYBARA_WAIT_TIME'].try(:to_i) || 2
 
   RSpec.configure do |config|
     # Run specs in random order to surface order dependencies. If you find an
