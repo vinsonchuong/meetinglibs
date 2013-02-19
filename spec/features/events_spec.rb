@@ -24,6 +24,16 @@ feature 'viewing a listing of events' do
   end
 end
 
+feature 'create an event' do
+  scenario 'as an administrator' do
+    sign_in with: {administrator: true}, via: :calnet
+    click_link 'Create Event'
+    fill_in 'Name', with: 'New Event'
+    click_link 'Create Event'
+    expect(find('.event_list .event:nth-child(1) .name')).to have_text('New Event')
+  end
+end
+
 feature 'archiving an event' do
   background do
     Event.create(name: 'Event 1', archived: true)

@@ -8,31 +8,10 @@ describe('MeetingLibs.View.Page.Events', function() {
     subject.remove();
   });
 
-  it('should render to its container', function() {
-    expect(subject.$el).toBe('body .page_content');
-  });
-
-  it('should add its class names to its container', function() {
-    expect(subject.$el).toHaveClass('view');
-    expect(subject.$el).toHaveClass('page');
-    expect(subject.$el).toHaveClass('events');
-  });
-
-  describe('#remove', function() {
-    beforeEach(function() {
-      subject.remove();
-    });
-
-    it('should remove itself from the DOM', function() {
-      expect(subject.$el).not.toExist();
-    });
-
-    it('should leave its container intact', function() {
-      var pageContent = $('body .page_content');
-      expect(pageContent).toExist();
-      expect(pageContent).not.toHaveClass('events');
-      expect(pageContent).toBeEmpty();
-    });
+  itShouldBehaveLike('a page', function() {
+    return {
+      subject: subject
+    };
   });
 
   it('should fetch the events from the server', function() {
@@ -46,6 +25,10 @@ describe('MeetingLibs.View.Page.Events', function() {
         {id: 2, name: 'Event 2'},
         {id: 3, name: 'Event 3'}
       ]);
+    });
+
+    it('should show a "Create Event" link', function() {
+      expect(subject.$('a.create')).toHaveAttr('href', '/#events/new');
     });
 
     it('should show a list of events', function() {

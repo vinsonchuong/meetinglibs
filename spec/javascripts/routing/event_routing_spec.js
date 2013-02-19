@@ -5,12 +5,21 @@ describe('Event Routes', function() {
 
   describe('/', function() {
     beforeEach(function() {
-      spyOn(MeetingLibs.View.Page, 'Events');
       Backbone.history.loadUrl('');
     });
 
     it('should render the events page', function() {
-      expect(MeetingLibs.View.Page.Events).toHaveBeenCalled();
+      expect($('.page_content')).toHaveClass('events');
+    });
+  });
+
+  describe('/events/new', function() {
+    beforeEach(function() {
+      Backbone.history.loadUrl('events/new');
+    });
+
+    it('should render the new events page', function() {
+      expect($('.page_content')).toHaveClass('new_event');
     });
   });
 });

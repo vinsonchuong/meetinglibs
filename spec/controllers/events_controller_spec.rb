@@ -41,6 +41,52 @@ describe EventsController do
     end
   end
 
+  describe '#create' do
+    def call_action
+      post :create, name: 'New Name', archived: false, format: :json
+    end
+
+    it_should_behave_like 'an authenticated action'
+    it_should_behave_like 'an administrator action'
+
+    context 'when authenticated as an administrator' do
+      before do
+        UserAuthenticator.any_instance.stub(:authenticated?).and_return(true)
+        UserAuthenticator.any_instance.stub(:administrator?).and_return(true)
+      end
+
+      context 'when given valid input' do
+        before { EventInput.any_instance.stub(:valid?).and_return(true) }
+
+        it 'should create the model' do
+          call_action
+          expect(Event.where(name: 'New Name')).not_to be_empty
+        end
+
+        it 'should respond with 201 Created' do
+          call_action
+          expect(response.code).to eq('201')
+        end
+
+        it 'should return the created model' do
+          call_action
+          json = JSON.parse(response.body).symbolize_keys
+          expect(json).to include(:id, name: 'New Name', archived: false)
+          expect(json.keys).to eq([:id, :name, :archived])
+        end
+      end
+
+      context 'when given invalid input' do
+        before { EventInput.any_instance.stub(:valid?).and_return(false) }
+
+        it 'should respond with 400 Bad Request' do
+          call_action
+          expect(response.code).to eq('400')
+        end
+      end
+    end
+  end
+
   describe '#update' do
     def call_action
       put :update, id: event.id, name: 'New Name', format: :json

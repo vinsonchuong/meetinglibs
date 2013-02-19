@@ -12,22 +12,11 @@ MeetingLibs.View.Page.Events = MeetingLibs.View.Page.extend({
   },
 
   initialize: function() {
-    this.setElement(Backbone.$('.page_content'));
+    MeetingLibs.View.Page.prototype.initialize.apply(this, arguments);
 
     this.model = new MeetingLibs.Collection.Event();
     this.listenTo(this.model, 'reset change destroy', this.render);
     this.model.fetch();
-  },
-
-  setElement: function() {
-    MeetingLibs.View.Page.prototype.setElement.apply(this, arguments);
-    this.$elClone = this.$el.clone();
-    this.$el.addClass(this.className);
-  },
-
-  render: function() {
-    this.$el.html(JST['templates/' + this.templateName](this.context()));
-    return this;
   },
 
   context: function() {
@@ -68,10 +57,5 @@ MeetingLibs.View.Page.Events = MeetingLibs.View.Page.extend({
       this.stopListening(dialog, 'confirm');
       event.destroy({wait: true});
     });
-  },
-
-  remove: function() {
-    this.$el.replaceWith(this.$elClone);
-    MeetingLibs.View.Page.prototype.remove.apply(this, arguments);
   }
 });

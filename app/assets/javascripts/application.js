@@ -6,6 +6,6 @@
 
 function MeetingLibs(options) {
   _.extend(this, options);
-  new MeetingLibs.Router();
+  router = new MeetingLibs.Router();
   Backbone.history.start();
 }

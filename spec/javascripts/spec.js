@@ -4,10 +4,19 @@
 //= require_self
 //= require_tree .
 
+sharedExamples = {};
+function itShouldBehaveLike(name, context) {
+  sharedExamples[name](context);
+}
+
 beforeEach(function() {
   session = {
     administrator: true
   };
+
+  spyOn(MeetingLibs.View.prototype, 'navigate').andCallFake(function(route) {
+    Backbone.history.loadUrl(route);
+  });
 
   $('<div/>').addClass('page_content').hide().appendTo('body');
   $('<div/>').addClass('dialog_content').hide().appendTo('body');
