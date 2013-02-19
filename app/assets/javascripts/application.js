@@ -1,5 +1,6 @@
 //= require jquery
 //= require jquery_ujs
+//= require humane
 //= require backbone-rails
 //= require_self
 //= require_tree .

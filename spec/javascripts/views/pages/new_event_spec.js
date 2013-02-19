@@ -14,7 +14,18 @@ describe('MeetingLibs.View.Page.NewEvent', function() {
     };
   });
 
-  describe('when submitting the form', function() {
+  describe('when submitting the form with a blank name', function() {
+    beforeEach(function() {
+      subject.$('.name').val('');
+      subject.$('.submit').click();
+    });
+
+    it('should inform the user that the form is required', function() {
+      expect(humane.log).toHaveBeenCalledWith('Please fill in the name field.');
+    });
+  });
+
+  describe('when submitting the form with valid input', function() {
     beforeEach(function() {
       subject.$('.name').val('New Event');
       subject.$('.submit').click();

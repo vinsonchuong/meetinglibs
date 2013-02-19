@@ -18,7 +18,12 @@ MeetingLibs.View.Page.NewEvent = MeetingLibs.View.Page.extend({
 
   createEvent: function(e) {
     e.preventDefault();
-    this.model.create({name: this.$('.name').val(), archived: false}, {wait: true});
+    var name = this.$('.name').val();
+    if (name) {
+      this.model.create({name: this.$('.name').val(), archived: false}, {wait: true});
+    } else {
+      humane.log('Please fill in the name field.');
+    }
   },
 
   navigateToEvents: function() {

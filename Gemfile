@@ -9,6 +9,7 @@ gem 'pg'
 
 gem 'jquery-rails'
 gem 'backbone-rails'
+gem 'humane-rails'
 
 gem 'rubycas-client-rails', git: 'git://github.com/rubycas/rubycas-client-rails'
 

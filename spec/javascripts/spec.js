@@ -14,6 +14,8 @@ beforeEach(function() {
     administrator: true
   };
 
+  spyOn(humane, 'log');
+
   spyOn(MeetingLibs.View.prototype, 'navigate').andCallFake(function(route) {
     Backbone.history.loadUrl(route);
   });
