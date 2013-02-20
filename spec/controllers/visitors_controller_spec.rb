@@ -136,9 +136,9 @@ describe VisitorsController do
     end
 
     let!(:visitor) { event.visitors.create!(user_attributes: {first_name: 'John', last_name: 'Doe', email: 'jd@example.com'}) }
+    let!(:user) { visitor.user }
 
     it_should_behave_like 'an authenticated action'
-    it_should_behave_like 'an administrator action'
 
     context 'when authenticated as an administrator' do
       before do
@@ -154,6 +154,10 @@ describe VisitorsController do
           expect(visitor.reload.user.email).to eq('new@example.com')
         end
 
+        it 'should not create a new associated user' do
+          expect(visitor.reload.user).to eq(user)
+        end
+
         it 'should respond with 204 No Content' do
           call_action
           expect(response.code).to eq('204')
@@ -166,6 +170,34 @@ describe VisitorsController do
         it 'should respond with 400 Bad Request' do
           call_action
           expect(response.code).to eq('400')
+        end
+      end
+    end
+
+    context 'when authenticated as the host' do
+      before do
+        UserAuthenticator.any_instance.stub(:authenticated?).and_return(true)
+        UserAuthenticator.any_instance.stub(:administrator?).and_return(false)
+        UserAuthenticator.any_instance.stub(:visitor?).and_return(true)
+        UserAuthenticator.any_instance.stub(:visitor).and_return(visitor)
+      end
+
+      context 'when given valid input' do
+        before { VisitorInput.any_instance.stub(:valid?).and_return(true) }
+
+        it 'should update the model' do
+          call_action
+          expect(visitor.reload.user.email).to eq('new@example.com')
+        end
+
+        it 'should not create a new associated user' do
+          call_action
+          expect(visitor.reload.user).to eq(user)
+        end
+
+        it 'should respond with 204 No Content' do
+          call_action
+          expect(response.code).to eq('204')
         end
       end
     end

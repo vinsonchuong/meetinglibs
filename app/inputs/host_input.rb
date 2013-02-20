@@ -6,6 +6,7 @@ class HostInput
   validates_presence_of :first_name, :last_name, :email
 
   def initialize(params, user_authenticator)
+    @id = params[:id]
     @first_name = params[:first_name]
     @last_name = params[:last_name]
     @email = params[:email]
@@ -22,7 +23,10 @@ class HostInput
       cas_user: cas_user,
       token: token
     }}.tap do |attributes|
-      if !@user_authenticator.administrator?
+      if @id.present?
+        user = Host.find(@id).user
+        attributes[:user_attributes][:id] = user.id
+      elsif !@user_authenticator.administrator?
         attributes[:user_attributes][:id] = attributes[:user_id] = @user_authenticator.user.id
       elsif (user = User.where(cas_user: cas_user).first).present?
         attributes[:user_attributes][:id] = attributes[:user_id] = user.id

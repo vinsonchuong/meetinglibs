@@ -1,6 +1,7 @@
 class HostsController < ApplicationController
   before_filter :require_authentication
-  before_filter :require_administrator, except: [:index, :create]
+  before_filter :require_administrator, only: :destroy
+  before_filter :require_administrator_or_self, only: :update
 
   respond_to :json
 
@@ -22,5 +23,11 @@ class HostsController < ApplicationController
 
   def destroy
     respond_with event.hosts.find(params[:id]).destroy
+  end
+
+  private
+
+  def require_administrator_or_self
+    head :unauthorized unless user_authenticator.administrator? || user_authenticator.host.id == params[:id].to_i
   end
 end

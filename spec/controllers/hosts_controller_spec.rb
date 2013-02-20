@@ -96,7 +96,7 @@ describe HostsController do
       end
     end
 
-    describe 'when authenticated as a user who is not participating in the event' do
+    context 'when authenticated as a user who is not participating in the event' do
       let!(:user) { User.create(first_name: 'John', last_name: 'Doe') }
       before do
         UserAuthenticator.any_instance.stub(:authenticated?).and_return(true)
@@ -136,9 +136,9 @@ describe HostsController do
     end
 
     let!(:host) { event.hosts.create!(user_attributes: {first_name: 'John', last_name: 'Doe', email: 'jd@example.com'}) }
+    let!(:user) { host.user }
 
     it_should_behave_like 'an authenticated action'
-    it_should_behave_like 'an administrator action'
 
     context 'when authenticated as an administrator' do
       before do
@@ -154,6 +154,10 @@ describe HostsController do
           expect(host.reload.user.email).to eq('new@example.com')
         end
 
+        it 'should not create a new associated user' do
+          expect(host.reload.user).to eq(user)
+        end
+
         it 'should respond with 204 No Content' do
           call_action
           expect(response.code).to eq('204')
@@ -167,6 +171,48 @@ describe HostsController do
           call_action
           expect(response.code).to eq('400')
         end
+      end
+    end
+
+    context 'when authenticated as the host' do
+      before do
+        UserAuthenticator.any_instance.stub(:authenticated?).and_return(true)
+        UserAuthenticator.any_instance.stub(:administrator?).and_return(false)
+        UserAuthenticator.any_instance.stub(:host?).and_return(true)
+        UserAuthenticator.any_instance.stub(:host).and_return(host)
+      end
+
+      context 'when given valid input' do
+        before { HostInput.any_instance.stub(:valid?).and_return(true) }
+
+        it 'should update the model' do
+          call_action
+          expect(host.reload.user.email).to eq('new@example.com')
+        end
+
+        it 'should not create a new associated user' do
+          call_action
+          expect(host.reload.user).to eq(user)
+        end
+
+        it 'should respond with 204 No Content' do
+          call_action
+          expect(response.code).to eq('204')
+        end
+      end
+    end
+
+    context 'when authenticated as someone else' do
+      before do
+        UserAuthenticator.any_instance.stub(:authenticated?).and_return(true)
+        UserAuthenticator.any_instance.stub(:administrator?).and_return(false)
+        UserAuthenticator.any_instance.stub(:host?).and_return(true)
+        UserAuthenticator.any_instance.stub(:host).and_return(mock(Host, id: host.id + 100))
+      end
+
+      it 'should respond with 401 Unauthorized' do
+        call_action
+        expect(response.code).to eq('401')
       end
     end
   end
