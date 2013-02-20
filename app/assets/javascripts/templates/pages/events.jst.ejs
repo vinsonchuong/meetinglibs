@@ -9,6 +9,8 @@
         <span class="name"><%= event.name %></span>
         <ul class="actions">
           <% if (session.administrator) { %>
+            <li><a href="/#events/<%= event.id %>/hosts" class="hosts">Manage Hosts</a></li>
+            <li><a href="/#events/<%= event.id %>/visitors" class="visitors">Manage Visitors</a></li>
             <li><a href="#" class="delete">Delete</a></li>
           <% } %>
         </ul>
@@ -18,6 +20,8 @@
         <span class="name"><%= event.name %></span>
         <ul class="actions">
           <% if (session.administrator) { %>
+            <li><a href="/#events/<%= event.id %>/hosts" class="hosts">Manage Hosts</a></li>
+            <li><a href="/#events/<%= event.id %>/visitors" class="visitors">Manage Visitors</a></li>
             <li><a href="#" class="archive">Archive</a></li>
             <li><a href="#" class="delete">Delete</a></li>
           <% } %>

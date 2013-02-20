@@ -1,0 +1,25 @@
+<h2>Hosts</h2>
+<ul class="actions">
+  <li><a class="create" href="/#events/<%= eventId %>/hosts/new">Add Host</a></li>
+</ul>
+<table>
+  <thead>
+    <tr>
+      <th class="name">Name</th>
+      <th class="actions">Actions</th>
+    </tr>
+  </thead>
+  <tbody class="host_list">
+    <% _.each(hosts, function(host) { %>
+      <tr class="host" data-id="<%= host.id %>">
+        <td class="name"><%= host.first_name %> <%= host.last_name %></td>
+        <td class="actions">
+          <ul>
+            <li><a class="edit" href="/#events/<%= eventId %>/hosts/<%= host.id %>">Edit</a></li>
+            <li><a class="delete" href="#">Remove</a></li>
+          </ul>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

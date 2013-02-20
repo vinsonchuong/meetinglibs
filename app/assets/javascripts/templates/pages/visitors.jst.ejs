@@ -1,0 +1,25 @@
+<h2>Visitors</h2>
+<ul class="actions">
+  <li><a class="create" href="/#events/<%= eventId %>/visitors/new">Add Visitor</a></li>
+</ul>
+<table>
+  <thead>
+    <tr>
+      <th class="name">Name</th>
+      <th class="actions">Actions</th>
+    </tr>
+  </thead>
+  <tbody class="visitor_list">
+    <% _.each(visitors, function(visitor) { %>
+      <tr class="visitor" data-id="<%= visitor.id %>">
+        <td class="name"><%= visitor.first_name %> <%= visitor.last_name %></td>
+        <td class="actions">
+          <ul>
+            <li><a class="edit" href="/#events/<%= eventId %>/visitors/<%= visitor.id %>">Edit</a></li>
+            <li><a class="delete" href="#">Remove</a></li>
+          </ul>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

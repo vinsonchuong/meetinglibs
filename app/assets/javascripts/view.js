@@ -1,5 +1,5 @@
 MeetingLibs.View = Backbone.View.extend({
-  navigate: function() {
-    router.navigate('', {trigger: true});
+  navigate: function(path) {
+    router.navigate(path, {trigger: true});
   }
 });

@@ -22,7 +22,9 @@ MeetingLibs.View.Page = MeetingLibs.View.extend({
   },
 
   remove: function() {
-    this.$el.replaceWith(this.$elClone);
+    if (this.$el.parent().length > 0) {
+      this.$el.replaceWith(this.$elClone);
+    }
     MeetingLibs.View.prototype.remove.apply(this, arguments);
   }
 });

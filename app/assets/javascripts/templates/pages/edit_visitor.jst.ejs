@@ -1,0 +1,22 @@
+<h2>Update Visitor</h2>
+<ul class="inputs">
+  <li>
+    <label>First Name <input class="first_name" type="text" value="<%= visitor.first_name %>" /></label>
+  </li>
+  <li>
+    <label>Last Name <input class="last_name" type="text" value="<%= visitor.last_name %>" /></label>
+  </li>
+  <li>
+    <label>Email <input class="email" type="text" value="<%= visitor.email %>" /></label>
+  </li>
+  <li>
+    <label>CalNet UID <input class="cas_user" type="text" value="<%= visitor.cas_user %>"  /></label>
+  </li>
+  <li>
+    <label>Login Token <input class="token" type="text" value="<%= visitor.token %>" /></label>
+  </li>
+</ul>
+<ul class="actions">
+  <li><a class="submit" href="#">Update Visitor</a></li>
+  <li><a class="cancel" href="/#events/<%= eventId %>/visitors">Cancel</a></li>
+</ul>

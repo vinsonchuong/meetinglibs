@@ -49,6 +49,14 @@ describe('MeetingLibs.View.Page.Events', function() {
         subject.render();
       });
 
+      it('should not allow managing hosts', function() {
+        expect(subject.$('.event_list .event .hosts')).not.toExist();
+      });
+
+      it('should not allow managing visitors', function() {
+        expect(subject.$('.event_list .event .visitors')).not.toExist();
+      });
+
       it('should not allow archiving events', function() {
         expect(subject.$('.event_list .event .archive')).not.toExist();
       });
@@ -56,6 +64,18 @@ describe('MeetingLibs.View.Page.Events', function() {
       it('should not allow deleting events', function() {
         expect(subject.$('.event_list .event .delete')).not.toExist();
       });
+    });
+
+    it('should show a link for managing hosts', function() {
+      expect(subject.$('.event_list .event:eq(0) a.hosts')).toHaveAttr('href', '/#events/1/hosts');
+      expect(subject.$('.event_list .event:eq(1) a.hosts')).toHaveAttr('href', '/#events/2/hosts');
+      expect(subject.$('.event_list .event:eq(2) a.hosts')).toHaveAttr('href', '/#events/3/hosts');
+    });
+
+    it('should show a link for managing visitors', function() {
+      expect(subject.$('.event_list .event:eq(0) a.visitors')).toHaveAttr('href', '/#events/1/visitors');
+      expect(subject.$('.event_list .event:eq(1) a.visitors')).toHaveAttr('href', '/#events/2/visitors');
+      expect(subject.$('.event_list .event:eq(2) a.visitors')).toHaveAttr('href', '/#events/3/visitors');
     });
 
     describe('when archiving an event', function() {

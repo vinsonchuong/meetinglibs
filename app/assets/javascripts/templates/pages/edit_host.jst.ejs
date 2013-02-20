@@ -1,0 +1,22 @@
+<h2>Update Host</h2>
+<ul class="inputs">
+  <li>
+    <label>First Name <input class="first_name" type="text" value="<%= host.first_name %>" /></label>
+  </li>
+  <li>
+    <label>Last Name <input class="last_name" type="text" value="<%= host.last_name %>" /></label>
+  </li>
+  <li>
+    <label>Email <input class="email" type="text" value="<%= host.email %>" /></label>
+  </li>
+  <li>
+    <label>CalNet UID <input class="cas_user" type="text" value="<%= host.cas_user %>"  /></label>
+  </li>
+  <li>
+    <label>Login Token <input class="token" type="text" value="<%= host.token %>" /></label>
+  </li>
+</ul>
+<ul class="actions">
+  <li><a class="submit" href="#">Update Host</a></li>
+  <li><a class="cancel" href="/#events/<%= eventId %>/hosts">Cancel</a></li>
+</ul>
