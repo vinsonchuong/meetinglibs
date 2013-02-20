@@ -5,6 +5,9 @@ MeetingLibs::Application.routes.draw do
   end
 
   defaults format: :json do
-    resources :events, only: [:index, :create, :update, :destroy]
+    resources :events, only: [:index, :create, :update, :destroy] do
+      resources :hosts, only: [:index, :create, :update, :destroy]
+      resources :visitors, only: [:index, :create, :update, :destroy]
+    end
   end
 end

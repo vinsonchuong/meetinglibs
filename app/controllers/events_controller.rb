@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 
   def update
     validate_input_with(EventInput) do |attributes|
-      respond_with Event.find(params[:id]).update_attributes(attributes), location: nil
+      respond_with Event.find(params[:id]).update_attributes(attributes)
     end
   end
 
