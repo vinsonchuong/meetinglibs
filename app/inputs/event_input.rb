@@ -24,19 +24,17 @@ class EventInput
   end
 
   def hosts_attributes
-    CSV.parse(@hosts, headers:true).map(&:to_hash).map do |row|
-      {user_attributes: {
-        first_name: row['First Name'],
-        last_name: row['Last Name'],
-        email: row['Email'],
-        cas_user: row['CalNet UID'],
-        token: row['Login Token'],
-      }}
-    end
+    parse_participant_csv(@hosts)
   end
 
   def visitors_attributes
-    CSV.parse(@visitors, headers:true).map(&:to_hash).map do |row|
+    parse_participant_csv(@visitors)
+  end
+
+  private
+
+  def parse_participant_csv(text)
+    CSV.parse(text, headers:true).map(&:to_hash).map do |row|
       {user_attributes: {
         first_name: row['First Name'],
         last_name: row['Last Name'],
