@@ -12,11 +12,15 @@ class ApplicationController < ActionController::Base
   end
 
   def user_authenticator
-    @user_authenticator ||= UserAuthenticator.new(session)
+    @user_authenticator ||= UserAuthenticator.new(session, event)
   end
 
-  def validate_input_with(input_class)
-    input = input_class.new(params)
+  def event
+    @event ||= params[:event_id].present? && Event.find(params[:event_id])
+  end
+
+  def validate_input_with(input_class, *arguments)
+    input = input_class.new(params, *arguments)
     if input.valid?
       yield input.attributes
     else

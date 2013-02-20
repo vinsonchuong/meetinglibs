@@ -1,9 +1,10 @@
 class UserAuthenticator
-  attr_reader :user
+  attr_reader :user, :host, :visitor
 
-  def initialize(session)
+  def initialize(session, event=nil)
     @session = session
     @user = User.where(id: @session[:user_id]).first
+    @event = event
   end
 
   def authenticated?
@@ -12,6 +13,26 @@ class UserAuthenticator
 
   def administrator?
     @user.administrator?
+  end
+
+  def participant?
+    host? || visitor?
+  end
+
+  def host
+    @host ||= @user.present? && @event.present? && @event.hosts.where(user_id: @user.id).first
+  end
+
+  def visitor
+    @visitor ||= @user.present? && @event.present? && @event.visitors.where(user_id: @user.id).first
+  end
+
+  def host?
+    host.present?
+  end
+
+  def visitor?
+    visitor.present?
   end
 
   def authenticate!(credentials)

@@ -47,7 +47,6 @@ describe HostsController do
     end
 
     it_should_behave_like 'an authenticated action'
-    it_should_behave_like 'an administrator action'
 
     context 'when authenticated as an administrator' do
       before do
@@ -61,6 +60,15 @@ describe HostsController do
         it 'should create the model' do
           call_action
           expect(event.hosts.where(user_id: User.where(first_name: 'John').first)).not_to be_empty
+        end
+
+        context 'when a user with the given cas_user already exists' do
+          let!(:user) { User.create!(cas_user: '111') }
+
+          it 'should create the model and associate it with the user' do
+            call_action
+            expect(event.hosts.where(user_id: user.id)).not_to be_empty
+          end
         end
 
         it 'should respond with 201 Created' do
@@ -84,6 +92,39 @@ describe HostsController do
         it 'should respond with 400 Bad Request' do
           call_action
           expect(response.code).to eq('400')
+        end
+      end
+    end
+
+    describe 'when authenticated as a user who is not participating in the event' do
+      let!(:user) { User.create(first_name: 'John', last_name: 'Doe') }
+      before do
+        UserAuthenticator.any_instance.stub(:authenticated?).and_return(true)
+        UserAuthenticator.any_instance.stub(:user).and_return(user)
+        UserAuthenticator.any_instance.stub(:administrator?).and_return(false)
+        UserAuthenticator.any_instance.stub(:participant?).and_return(false)
+      end
+
+      context 'when given valid input' do
+        before { HostInput.any_instance.stub(:valid?).and_return(true) }
+
+        it 'should create the model for the authenticated user' do
+          call_action
+          expect(event.hosts.where(user_id: user.id)).not_to be_empty
+        end
+
+        it 'should respond with 201 Created' do
+          call_action
+          expect(response.code).to eq('201')
+        end
+
+        it 'should return the created model' do
+          call_action
+          expect(JSON.parse(response.body).symbolize_keys).to include(
+            :id,
+            first_name: 'John', last_name: 'Doe', email: 'john@example.com',
+            cas_user: '111', token: nil
+          )
         end
       end
     end

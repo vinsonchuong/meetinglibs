@@ -48,5 +48,37 @@ describe UserAuthenticator do
       it { should_not be_authenticated }
       its(:user) { should_not be_present }
     end
+
+    context 'when scoped to an event' do
+      subject { UserAuthenticator.new(session, event) }
+      let(:event) { Event.create(name: 'Event') }
+      let!(:user) { User.create(cas_user: 'cas_user') }
+      before { subject.authenticate!(cas_user: 'cas_user') }
+
+      context 'when the user is not participating in the event' do
+        it { should be_authenticated }
+        it { should_not be_participant }
+        it { should_not be_host }
+        it { should_not be_visitor }
+      end
+
+      context 'when the user is a host for the event' do
+        let!(:host) { event.hosts.create(user: user) }
+
+        it { should be_authenticated }
+        it { should be_participant }
+        it { should be_host }
+        it { should_not be_visitor }
+      end
+
+      context 'when the user is a visitor for the event' do
+        let!(:host) { event.visitors.create(user: user) }
+
+        it { should be_authenticated }
+        it { should be_participant }
+        it { should_not be_host }
+        it { should be_visitor }
+      end
+    end
   end
 end
