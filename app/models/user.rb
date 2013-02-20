@@ -1,3 +1,3 @@
 class User < ActiveRecord::Base
-  attr_accessible :administrator, :cas_user, :token
+  attr_accessible :first_name, :last_name, :email, :administrator, :cas_user, :token
 end

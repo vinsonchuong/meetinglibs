@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130210205751) do
+ActiveRecord::Schema.define(:version => 20130219152138) do
 
   create_table "events", :force => true do |t|
     t.text     "name"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(:version => 20130210205751) do
   end
 
   add_index "events", ["archived"], :name => "index_events_on_archived"
+
+  create_table "hosts", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "hosts", ["event_id"], :name => "index_hosts_on_event_id"
+  add_index "hosts", ["user_id"], :name => "index_hosts_on_user_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -38,9 +48,22 @@ ActiveRecord::Schema.define(:version => 20130210205751) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.boolean  "administrator"
+    t.text     "first_name"
+    t.text     "last_name"
+    t.text     "email"
   end
 
   add_index "users", ["cas_user"], :name => "index_users_on_cas_user"
   add_index "users", ["token"], :name => "index_users_on_token"
+
+  create_table "visitors", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "visitors", ["event_id"], :name => "index_visitors_on_event_id"
+  add_index "visitors", ["user_id"], :name => "index_visitors_on_user_id"
 
 end
