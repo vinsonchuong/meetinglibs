@@ -28,11 +28,29 @@ describe('MeetingLibs.View.Page.NewEvent', function() {
   describe('when submitting the form with valid input', function() {
     beforeEach(function() {
       subject.$('.name').val('New Event');
+      subject.$('.hosts').val([
+        'First Name,Last Name,Email',
+        'John,Doe,john@example.com'
+      ].join('\n'));
+      subject.$('.visitors').val([
+        'First Name,Last Name,Email',
+        'Jane,Doe,jane@example.com'
+      ].join('\n'));
       subject.$('.submit').click();
     });
 
     it('should create the event on the server', function() {
-      expect({method: 'POST', url: '/events'}).toHaveBeenRequestedWith({name: 'New Event', archived: false});
+      expect({method: 'POST', url: '/events'}).toHaveBeenRequestedWith({
+        name: 'New Event', archived: false,
+        hosts: [
+          'First Name,Last Name,Email',
+          'John,Doe,john@example.com'
+        ].join('\n'),
+        visitors: [
+          'First Name,Last Name,Email',
+          'Jane,Doe,jane@example.com'
+        ].join('\n')
+      });
     });
 
     describe('when the server responds', function() {

@@ -20,7 +20,12 @@ MeetingLibs.View.Page.NewEvent = MeetingLibs.View.Page.extend({
     e.preventDefault();
     var name = this.$('.name').val();
     if (name) {
-      this.model.create({name: this.$('.name').val(), archived: false}, {wait: true});
+      this.model.create({
+        name: this.$('.name').val(),
+        archived: false,
+        hosts: this.$('.hosts').val(),
+        visitors: this.$('.visitors').val()
+      }, {wait: true});
     } else {
       humane.log('Please fill in the name field.');
     }

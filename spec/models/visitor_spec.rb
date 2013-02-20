@@ -1,12 +1,23 @@
 require 'spec_helper'
 
 describe Visitor do
-  subject { Visitor.create!(event: event, user: user) }
+  subject { Visitor.create!(attributes) }
   let(:event) { Event.create!(name: 'Event', archived: false) }
-  let(:user) { User.create(first_name: 'John', last_name: 'Doe', cas_user: 'UID') }
 
-  its(:event) { should eq(event) }
-  its(:user) { should eq(user) }
+  context 'when associated records already exist' do
+    let(:attributes) { {event: event, user: user} }
+    let(:user) { User.create(first_name: 'John', last_name: 'Doe', cas_user: 'UID') }
+
+    its(:event) { should eq(event) }
+    its(:user) { should eq(user) }
+  end
+
+  context 'when the associated user does not exist' do
+    let(:attributes) { {event: event, user_attributes: user_attributes} }
+    let(:user_attributes) { {first_name: 'John', last_name: 'Doe', email: 'jdoe@example.com', cas_user: '123456'} }
+
+    its('user.first_name') { should eq('John') }
+  end
 
   describe '.with_contact_info' do
     subject { Visitor.with_contact_info }

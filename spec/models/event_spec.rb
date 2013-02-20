@@ -1,24 +1,46 @@
 require 'spec_helper'
 
 describe Event do
-  subject { Event.create!(name: 'Event Name', archived: false) }
+  subject { Event.create!(attributes) }
+  let(:attributes) { {name: 'Event Name', archived: false} }
   its(:name) { should eq('Event Name') }
   it { should_not be_archived }
 
-  describe '#hosts' do
+  context 'when creating associated records' do
     let!(:host1) { subject.hosts.create!(user: User.create(first_name: 'John')) }
     let!(:host2) { subject.hosts.create!(user: User.create(first_name: 'Andy')) }
     let!(:host3) { subject.hosts.create!(user: User.create(first_name: 'Bob')) }
 
-    its(:hosts) { should eq([host1, host2, host3]) }
-  end
-
-  describe '#visitors' do
     let!(:visitor1) { subject.visitors.create!(user: User.create(first_name: 'John')) }
     let!(:visitor2) { subject.visitors.create!(user: User.create(first_name: 'Andy')) }
     let!(:visitor3) { subject.visitors.create!(user: User.create(first_name: 'Bob')) }
 
+    its(:hosts) { should eq([host1, host2, host3]) }
     its(:visitors) { should eq([visitor1, visitor2, visitor3]) }
+  end
+
+  context 'when given host and visitor attributes' do
+    let(:attributes) do
+      {
+        name: 'Event Name', archived: false,
+        hosts_attributes: [
+          {user_attributes: {first_name: 'John', last_name: 'Doe', email: 'jdoe@example.com', cas_user: '123456'}},
+          {user_attributes: {first_name: 'Andrew', last_name: 'Park', email: 'apark@example.com', token: 'apark@example.com'}},
+          {user_attributes: {first_name: 'Sara', last_name: 'Stone', email: '', cas_user: '', token: ''}}
+        ],
+        visitors_attributes: [
+          {user_attributes: {first_name: 'Jane', last_name: 'Doe', email: 'jane@example.com'}},
+        ]
+      }
+    end
+
+    it 'should create hosts' do
+      expect(subject.hosts.map(&:user).map(&:first_name).sort).to eq(%w[Andrew John Sara])
+    end
+
+    it 'should create visitors' do
+      expect(subject.visitors.map(&:user).map(&:first_name).sort).to eq(%w[Jane])
+    end
   end
 
   describe '.scoped' do
