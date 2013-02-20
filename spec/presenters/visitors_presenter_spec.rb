@@ -4,7 +4,7 @@ describe VisitorsPresenter do
   subject { VisitorsPresenter.new(visitors, user_authenticator) }
 
   let(:event) { Event.create!(name: 'Event', archived: false) }
-  let(:visitors) { event.visitors }
+  let(:visitors) { [visitor1, visitor2] }
   let!(:visitor1) { event.visitors.create!(user_attributes: {first_name: 'John', last_name: 'Doe', email: 'jd@example.com', cas_user: '111'}) }
   let!(:visitor2) { event.visitors.create!(user_attributes: {first_name: 'Alex', last_name: 'Langley', email: 'al@example.com', cas_user: '222'}) }
 

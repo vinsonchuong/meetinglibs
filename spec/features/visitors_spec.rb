@@ -5,14 +5,16 @@ feature 'viewing a list of visitors' do
     event = Event.create(name: 'Event', archived: false)
     event.visitors.create(user_attributes: {first_name: 'John', last_name: 'Doe', email: 'johndoe@example.com'})
     event.visitors.create(user_attributes: {first_name: 'Jane', last_name: 'Doe', email: 'janedoe@example.com'})
+    event.visitors.create(user_attributes: {first_name: 'Jack', last_name: 'Lane', email: 'jack@example.com'})
   end
 
   scenario 'as an administrator' do
     sign_in with: {administrator: true}, via: :calnet
     within('.event_list .event:nth-child(1)') { click_link 'Manage Visitors' }
 
-    expect(find('.visitor_list .visitor:nth-child(1) .name')).to have_text('John Doe')
-    expect(find('.visitor_list .visitor:nth-child(2) .name')).to have_text('Jane Doe')
+    expect(find('.visitor_list .visitor:nth-child(1) .name')).to have_text('Jane Doe')
+    expect(find('.visitor_list .visitor:nth-child(2) .name')).to have_text('John Doe')
+    expect(find('.visitor_list .visitor:nth-child(3) .name')).to have_text('Jack Lane')
   end
 end
 

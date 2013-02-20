@@ -3,7 +3,7 @@ require 'spec_helper'
 describe EventsPresenter do
   subject { EventsPresenter.new(events, user_authenticator) }
 
-  let(:events) { Event.scoped }
+  let(:events) { [event1, event2, event3] }
   let!(:event1) { Event.create(name: 'Event 1', archived: true) }
   let!(:event2) { Event.create(name: 'Event 2', archived: false) }
   let!(:event3) { Event.create(name: 'Event 3') }

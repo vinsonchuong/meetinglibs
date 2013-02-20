@@ -15,8 +15,8 @@ describe Event do
     let!(:visitor2) { subject.visitors.create!(user: User.create(first_name: 'Andy')) }
     let!(:visitor3) { subject.visitors.create!(user: User.create(first_name: 'Bob')) }
 
-    its(:hosts) { should eq([host1, host2, host3]) }
-    its(:visitors) { should eq([visitor1, visitor2, visitor3]) }
+    its(:hosts) { should include(host1, host2, host3) }
+    its(:visitors) { should include(visitor1, visitor2, visitor3) }
   end
 
   context 'when given host and visitor attributes' do
@@ -43,17 +43,17 @@ describe Event do
     end
   end
 
-  describe '.scoped' do
+  describe '.ordered' do
     before do
       Event.create(name: 'Event1', archived: false)
       Event.create(name: 'Event2', archived: true)
       Event.create(name: 'Event3', archived: false)
     end
-    subject { Event.scoped }
+    subject { Event.ordered }
 
-    it 'should be a collection of Events with the correct attributes' do
-      expect(subject.pluck(:name)).to eq(%w[Event1 Event2 Event3])
-      expect(subject.pluck(:archived)).to eq([false, true, false])
+    it 'should be a collection of Events with the correct attributes and order' do
+      expect(subject.pluck(:name)).to eq(%w[Event3 Event1 Event2])
+      expect(subject.pluck(:archived)).to eq([false, false, true])
     end
   end
 end

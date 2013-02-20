@@ -1,5 +1,5 @@
 class Visitor < ActiveRecord::Base
-  scope :with_contact_info, includes(:user)
+  scope :with_contact_info, includes(:user).order('users.last_name, users.first_name')
 
   belongs_to :event
   belongs_to :user

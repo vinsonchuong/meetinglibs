@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  scope :ordered, order('archived, created_at DESC')
+
   has_many :hosts
   has_many :visitors
 

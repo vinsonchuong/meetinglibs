@@ -4,7 +4,7 @@ describe HostsPresenter do
   subject { HostsPresenter.new(hosts, user_authenticator) }
 
   let(:event) { Event.create!(name: 'Event', archived: false) }
-  let(:hosts) { event.hosts }
+  let(:hosts) { [host1, host2] }
   let!(:host1) { event.hosts.create!(user_attributes: {first_name: 'John', last_name: 'Doe', email: 'jd@example.com', cas_user: '111'}) }
   let!(:host2) { event.hosts.create!(user_attributes: {first_name: 'Alex', last_name: 'Langley', email: 'al@example.com', cas_user: '222'}) }
 

@@ -20,10 +20,10 @@ describe HostsController do
 
         it 'should return all the hosts for the event' do
           call_action
-          expect(response.body).to eq([
-            {id: host1.id, first_name: 'John', last_name: 'Doe', email: 'john@example.com', cas_user: '111', token: nil},
-            {id: host2.id, first_name: 'Jane', last_name: 'Doe', email: 'jane@example.com', cas_user: '222', token: nil}
-          ].to_json)
+          expect(JSON.parse(response.body)).to include(
+            {id: host1.id, first_name: 'John', last_name: 'Doe', email: 'john@example.com', cas_user: '111', token: nil}.stringify_keys,
+            {id: host2.id, first_name: 'Jane', last_name: 'Doe', email: 'jane@example.com', cas_user: '222', token: nil}.stringify_keys
+          )
         end
       end
 
@@ -32,10 +32,10 @@ describe HostsController do
 
         it 'should return only the names of the hosts for the event' do
           call_action
-          expect(response.body).to eq([
-            {id: host1.id, first_name: 'John', last_name: 'Doe'},
-            {id: host2.id, first_name: 'Jane', last_name: 'Doe'}
-          ].to_json)
+          expect(JSON.parse(response.body)).to include(
+            {id: host1.id, first_name: 'John', last_name: 'Doe'}.stringify_keys,
+            {id: host2.id, first_name: 'Jane', last_name: 'Doe'}.stringify_keys
+          )
         end
       end
     end

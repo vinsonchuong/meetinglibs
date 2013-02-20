@@ -11,8 +11,8 @@ feature 'viewing a list of hosts' do
     sign_in with: {administrator: true}, via: :calnet
     within('.event_list .event:nth-child(1)') { click_link 'Manage Hosts' }
 
-    expect(find('.host_list .host:nth-child(1) .name')).to have_text('John Doe')
-    expect(find('.host_list .host:nth-child(2) .name')).to have_text('Jane Doe')
+    expect(find('.host_list .host:nth-child(1) .name')).to have_text('Jane Doe')
+    expect(find('.host_list .host:nth-child(2) .name')).to have_text('John Doe')
   end
 end
 

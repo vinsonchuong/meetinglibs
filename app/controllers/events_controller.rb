@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   respond_to :json
 
   def index
-    respond_with EventsPresenter.new(Event.all, user_authenticator)
+    respond_with EventsPresenter.new(Event.ordered, user_authenticator)
   end
 
   def create

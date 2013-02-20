@@ -22,13 +22,13 @@ describe Host do
   describe '.with_contact_info' do
     subject { Host.with_contact_info }
     before do
-      Host.create!(event: event, user: User.create(first_name: 'John'))
-      Host.create!(event: event, user: User.create(first_name: 'Andy'))
-      Host.create!(event: event, user: User.create(first_name: 'Bob'))
+      Host.create!(event: event, user: User.create(first_name: 'John', last_name: 'Douglass'))
+      Host.create!(event: event, user: User.create(first_name: 'Andy', last_name: 'Frank'))
+      Host.create!(event: event, user: User.create(first_name: 'Bob', last_name: 'Archer'))
     end
 
     it 'be a collection of hosts including the associated users' do
-      expect(subject.map(&:user).map(&:first_name).sort).to eq(%w[Andy Bob John])
+      expect(subject.map(&:user).map(&:first_name)).to eq(%w[Bob John Andy])
     end
   end
 end

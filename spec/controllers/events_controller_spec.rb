@@ -19,11 +19,11 @@ describe EventsController do
 
         it 'should return all events' do
           call_action
-          expect(response.body).to eq([
-            {id: event1.id, name: 'Event 1', archived: true},
-            {id: event2.id, name: 'Event 2', archived: false},
-            {id: event3.id, name: 'Event 3', archived: false}
-          ].to_json)
+          expect(JSON.parse(response.body)).to include(
+            {id: event1.id, name: 'Event 1', archived: true}.stringify_keys,
+            {id: event2.id, name: 'Event 2', archived: false}.stringify_keys,
+            {id: event3.id, name: 'Event 3', archived: false}.stringify_keys
+          )
         end
       end
 
@@ -32,10 +32,10 @@ describe EventsController do
 
         it 'should return only unarchived events' do
           call_action
-          expect(response.body).to eq([
-            {id: event2.id, name: 'Event 2'},
-            {id: event3.id, name: 'Event 3'}
-          ].to_json)
+          expect(JSON.parse(response.body)).to include(
+            {id: event2.id, name: 'Event 2'}.stringify_keys,
+            {id: event3.id, name: 'Event 3'}.stringify_keys
+          )
         end
       end
     end
