@@ -16,7 +16,7 @@ class UserAuthenticator
 
   def authenticate!(credentials)
     if credentials.has_key?(:cas_user)
-      @user = User.where(cas_user: credentials[:cas_user]).first
+      @user = User.where(cas_user: credentials[:cas_user]).first_or_create
     elsif credentials.has_key?(:token)
       @user = User.where(token: credentials[:token]).first
     end

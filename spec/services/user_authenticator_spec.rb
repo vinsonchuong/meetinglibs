@@ -21,6 +21,12 @@ describe UserAuthenticator do
       end
     end
 
+    context 'when provided a cas_user it cannot find a user for' do
+      before { subject.authenticate!(cas_user: 'cas_user') }
+      it { should be_authenticated }
+      its('user.cas_user') { should eq('cas_user') }
+    end
+
     context 'when provided a valid token' do
       let!(:user) { User.create(token: 'token') }
       before { subject.authenticate!(token: 'token') }

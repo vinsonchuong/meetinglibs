@@ -35,18 +35,6 @@ describe SessionsController do
           expect(response).to redirect_to(action: :show)
         end
       end
-
-      context 'when not successfully authenticated locally' do
-        before do
-          UserAuthenticator.any_instance
-          .stub(:authenticated!)
-          .with(cas_user: 'cas_user')
-          .and_return(false)
-        end
-
-        it 'should redirect to #new'
-        it 'should display an error message'
-      end
     end
   end
 
