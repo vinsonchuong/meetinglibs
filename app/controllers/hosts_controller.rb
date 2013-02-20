@@ -1,5 +1,6 @@
 class HostsController < ApplicationController
   before_filter :require_authentication
+  before_filter :require_administrator_or_not_participant, only: :create
   before_filter :require_administrator, only: :destroy
   before_filter :require_administrator_or_self, only: :update
 
@@ -29,5 +30,9 @@ class HostsController < ApplicationController
 
   def require_administrator_or_self
     head :unauthorized unless user_authenticator.administrator? || user_authenticator.host.id == params[:id].to_i
+  end
+
+  def require_administrator_or_not_participant
+    head :unauthorized unless user_authenticator.administrator? || !user_authenticator.participant?
   end
 end
