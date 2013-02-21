@@ -1,6 +1,8 @@
 <h2>Events</h2>
 <ul class="actions">
+<% if (session.administrator) { %>
   <li><a class="create" href="/#events/new">Create Event</a></li>
+<% } %>
 </ul>
 <ul class="event_list">
   <% _.each(events, function(event) { %>
