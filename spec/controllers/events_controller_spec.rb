@@ -9,10 +9,14 @@ describe EventsController do
     it_should_behave_like 'an authenticated action'
 
     context 'when authenticated' do
-      before { UserAuthenticator.any_instance.stub(:authenticated?).and_return(true) }
+      let!(:user) { User.create!(first_name: 'John', last_name: 'Doe') }
+      before do
+        UserAuthenticator.any_instance.stub(:authenticated?).and_return(true)
+        UserAuthenticator.any_instance.stub(:user).and_return(user)
+      end
       let!(:event1) { Event.create!(name: 'Event 1', archived: true) }
-      let!(:event2) { Event.create!(name: 'Event 2') }
-      let!(:event3) { Event.create!(name: 'Event 3') }
+      let!(:event2) { Event.create!(name: 'Event 2', archived: false) }
+      let!(:event3) { Event.create!(name: 'Event 3', archived: false) }
 
       describe 'as an administrator' do
         before { UserAuthenticator.any_instance.stub(:administrator?).and_return(true) }
@@ -20,9 +24,9 @@ describe EventsController do
         it 'should return all events' do
           call_action
           expect(JSON.parse(response.body)).to include(
-            {id: event1.id, name: 'Event 1', archived: true}.stringify_keys,
-            {id: event2.id, name: 'Event 2', archived: false}.stringify_keys,
-            {id: event3.id, name: 'Event 3', archived: false}.stringify_keys
+            {id: event1.id, name: 'Event 1', archived: true, host_id: nil, visitor_id: nil}.stringify_keys,
+            {id: event2.id, name: 'Event 2', archived: false, host_id: nil, visitor_id: nil}.stringify_keys,
+            {id: event3.id, name: 'Event 3', archived: false, host_id: nil, visitor_id: nil}.stringify_keys
           )
         end
       end
@@ -33,8 +37,8 @@ describe EventsController do
         it 'should return only unarchived events' do
           call_action
           expect(JSON.parse(response.body)).to include(
-            {id: event2.id, name: 'Event 2'}.stringify_keys,
-            {id: event3.id, name: 'Event 3'}.stringify_keys
+            {id: event2.id, name: 'Event 2', host_id: nil, visitor_id: nil}.stringify_keys,
+            {id: event3.id, name: 'Event 3', host_id: nil, visitor_id: nil}.stringify_keys
           )
         end
       end

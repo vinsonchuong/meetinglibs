@@ -64,6 +64,12 @@ describe('MeetingLibs.View.Page.Events', function() {
       it('should not allow deleting events', function() {
         expect(subject.$('.event_list .event .delete')).not.toExist();
       });
+
+      it('should show a link for updating survey answers', function() {
+        expect(subject.$('.event_list .event:eq(0) a.survey')).toHaveAttr('href', '/#events/1');
+        expect(subject.$('.event_list .event:eq(1) a.survey')).toHaveAttr('href', '/#events/2');
+        expect(subject.$('.event_list .event:eq(2) a.survey')).toHaveAttr('href', '/#events/3');
+      });
     });
 
     it('should show a link for managing hosts', function() {

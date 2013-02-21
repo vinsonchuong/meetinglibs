@@ -16,6 +16,7 @@ beforeEach(function() {
 
   spyOn(humane, 'log');
 
+  new MeetingLibs.Router();
   spyOn(MeetingLibs.View.prototype, 'navigate').andCallFake(function(route) {
     Backbone.history.loadUrl(route);
   });

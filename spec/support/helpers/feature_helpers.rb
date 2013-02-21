@@ -15,9 +15,13 @@ module FeatureHelpers
       fill_in 'Passphrase', with: calnet_passphrase
       click_button 'Sign In'
     else
-      token = options[:via] == :invalid_token ? 'invalid' : 'token'
+      if options[:with].class == User
+        token = options[:with].token
+      else
+        User.create!({token: 'token'}.merge(options[:with] || {}))
+        token = options[:via] == :invalid_token ? 'invalid' : 'token'
+      end
 
-      User.create!({token: 'token'}.merge(options[:with] || {}))
       visit '/'
       fill_in 'invitation token', with: token
       click_button 'Sign In'

@@ -4,29 +4,20 @@
 </ul>
 <ul class="event_list">
   <% _.each(events, function(event) { %>
-    <% if (event.archived) { %>
-      <li class="event archived" data-id="<%= event.id %>">
-        <span class="name"><%= event.name %></span>
-        <ul class="actions">
-          <% if (session.administrator) { %>
-            <li><a href="/#events/<%= event.id %>/hosts" class="hosts">Manage Hosts</a></li>
-            <li><a href="/#events/<%= event.id %>/visitors" class="visitors">Manage Visitors</a></li>
-            <li><a href="#" class="delete">Delete</a></li>
-          <% } %>
-        </ul>
-      </li>
-    <% } else { %>
-      <li class="event" data-id="<%= event.id %>">
-        <span class="name"><%= event.name %></span>
-        <ul class="actions">
-          <% if (session.administrator) { %>
-            <li><a href="/#events/<%= event.id %>/hosts" class="hosts">Manage Hosts</a></li>
-            <li><a href="/#events/<%= event.id %>/visitors" class="visitors">Manage Visitors</a></li>
+    <li class="event <% if (event.archived) { %>archived<% } %>" data-id="<%= event.id %>">
+      <span class="name"><%= event.name %></span>
+      <ul class="actions">
+        <% if (session.administrator) { %>
+          <li><a href="/#events/<%= event.id %>/hosts" class="hosts">Manage Hosts</a></li>
+          <li><a href="/#events/<%= event.id %>/visitors" class="visitors">Manage Visitors</a></li>
+          <% if (!event.archived) { %>
             <li><a href="#" class="archive">Archive</a></li>
-            <li><a href="#" class="delete">Delete</a></li>
           <% } %>
-        </ul>
-      </li>
-    <% } %>
+          <li><a href="#" class="delete">Delete</a></li>
+        <% } else { %>
+          <li><a href="/#events/<%= event.id %>" class="survey">Update Survey Answers</a></li>
+        <% } %>
+      </ul>
+    </li>
   <% }) %>
 </ul>

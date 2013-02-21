@@ -1,8 +1,4 @@
 describe('Visitor Routes', function() {
-  beforeEach(function() {
-    new MeetingLibs.Router();
-  });
-
   describe('/events/1/visitors', function() {
     it('should pass the event id to the page', function() {
       spyOn(MeetingLibs.View.Page, 'Visitors');

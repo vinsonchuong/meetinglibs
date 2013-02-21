@@ -2,6 +2,7 @@ MeetingLibs.Router = Backbone.Router.extend({
   routes: {
     '': 'events',
     'events/new': 'newEvent',
+    'events/:id': 'event',
 
     'events/:event_id/hosts': 'hosts',
     'events/:event_id/hosts/new': 'newHost',
@@ -24,6 +25,13 @@ MeetingLibs.Router = Backbone.Router.extend({
       this.page.remove();
     }
     this.page = new MeetingLibs.View.Page.NewEvent();
+  },
+
+  event: function(id) {
+    if (this.page) {
+      this.page.remove();
+    }
+    this.page = new MeetingLibs.View.Page.Event({id: id});
   },
 
   hosts: function(eventId) {

@@ -41,6 +41,48 @@ describe HostsController do
     end
   end
 
+  describe '#show' do
+    def call_action
+      get :show, event_id: event.id, id: host.id, format: :json
+    end
+
+    let(:host) { event.hosts.create!(user_attributes: {first_name: 'John', last_name: 'Doe', email: 'jdoe@example.com'}) }
+
+    it_should_behave_like 'an authenticated action'
+
+    context 'when authenticated' do
+      before { UserAuthenticator.any_instance.stub(:authenticated?).and_return(true) }
+
+      describe 'as the host' do
+        before do
+          UserAuthenticator.any_instance.stub(:administrator?).and_return(false)
+          UserAuthenticator.any_instance.stub(:host?).and_return(true)
+          UserAuthenticator.any_instance.stub(:host).and_return(host)
+        end
+
+        it 'should return the host' do
+          call_action
+          expect(JSON.parse(response.body)).to eq({
+            id: host.id, first_name: 'John', last_name: 'Doe', email: 'jdoe@example.com'
+          }.stringify_keys)
+        end
+      end
+
+      describe 'some other user' do
+        before do
+          UserAuthenticator.any_instance.stub(:administrator?).and_return(false)
+          UserAuthenticator.any_instance.stub(:host?).and_return(true)
+          UserAuthenticator.any_instance.stub(:host).and_return(Host.create(event: event, user_attributes: {first_name: 'other person'}))
+        end
+
+        it 'should respond with 401 Unauthorized' do
+          call_action
+          expect(response.code).to eq('401')
+        end
+      end
+    end
+  end
+
   describe '#create' do
     def call_action
       post :create, event_id: event.id, first_name: 'John', last_name: 'Doe', email: 'john@example.com', cas_user: '111', format: :json
@@ -122,8 +164,7 @@ describe HostsController do
           call_action
           expect(JSON.parse(response.body).symbolize_keys).to include(
             :id,
-            first_name: 'John', last_name: 'Doe', email: 'john@example.com',
-            cas_user: '111', token: nil
+            first_name: 'John', last_name: 'Doe', email: 'john@example.com'
           )
         end
       end

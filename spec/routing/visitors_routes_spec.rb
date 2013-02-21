@@ -7,6 +7,12 @@ describe 'Visitors Routes' do
     end
   end
 
+  describe 'get /events/1/visitors/1' do
+    it 'should route to VisitorsController#show' do
+      expect(get: '/events/1/visitors/1').to route_to(controller: 'visitors', action: 'show', event_id: '1', id: '1', format: :json)
+    end
+  end
+
   describe 'post /events/1/visitors' do
     it 'should route to VisitorsController#create' do
       expect(post: '/events/1/visitors').to route_to(controller: 'visitors', action: 'create', event_id: '1', format: :json)

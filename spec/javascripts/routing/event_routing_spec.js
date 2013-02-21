@@ -1,8 +1,4 @@
 describe('Event Routes', function() {
-  beforeEach(function() {
-    new MeetingLibs.Router();
-  });
-
   describe('/', function() {
     beforeEach(function() {
       Backbone.history.loadUrl('');
@@ -20,6 +16,16 @@ describe('Event Routes', function() {
 
     it('should render the new events page', function() {
       expect($('.page_content')).toHaveClass('new_event');
+    });
+  });
+
+  describe('/events/1', function() {
+    beforeEach(function() {
+      Backbone.history.loadUrl('events/1');
+    });
+
+    it('should render the event page', function() {
+      expect($('.page_content')).toHaveClass('event');
     });
   });
 });
